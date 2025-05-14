@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PM Hub Assistant</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Floating Button to Open Chatbot - NOW WITH IMAGE -->
+    <button id="open-chat-btn">
+        <span>💬</span>
+    </button>
+
+    <div id="chat-container" style="display: none;">
+        <div id="chat-header">
+            <div class="header-content"> <!-- WRAPPER FOR AVATAR AND TITLE -->
+                <img src="bot-avatar.png" alt="Assistant Avatar" id="header-avatar-img">
+                <span id="header-title">PM Hub Assistant</span>
+            </div>
+            <button id="close-chat-btn">×</button>
+        </div>
+
+        <div id="chat-initial-view">
+            <h2>How can I help you today?</h2>
+            <ul id="suggested-actions-list">
+                <li class="suggested-action" data-category="navigation">
+                    <span>🧭 Navigation</span>
+                </li>
+                <li class="suggested-action" data-category="community">
+                    <span>💬 Community</span>
+                </li>
+                <li class="suggested-action" data-category="library">
+                    <span>📚 Library</span>
+                </li>
+                <li class="suggested-action" data-category="calendar-ai">
+                    <span>📅 Calendar & AI</span>
+                </li>
+                <li class="suggested-action direct-question">
+                    <span>ℹ️ General Help / Other</span>
+                </li>
+            </ul>
+        </div>
+
+        <div id="chat-conversation-view" style="display: none;">
+            <div id="chat-log">
+                <!-- Messages will appear here -->
+            </div>
+            <div id="quick-questions-display-area" style="display:none;">
+                <!-- Quick question buttons will appear here -->
+            </div>
+            <div id="back-to-categories-area">
+                <button id="back-to-categories-btn">‹ Back to suggestions</button>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,163 @@
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    margin: 0;
+    background-color: #f7f7f7;
+}
+
+/* ... (stili body, chat-container, etc. come prima) ... */
+
+/* --- Pulsante di Apertura con Emoji --- */
+#open-chat-btn {
+    position: fixed; bottom: 20px; right: 20px;
+    background-color: #e7f3f8; /* Sfondo Blu Notion */
+    border: none;
+    border-radius: 50%;
+    width: 50px; height: 50px;
+    padding: 0; /* Rimuovi padding se l'emoji è centrata con flexbox */
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15); cursor: pointer;
+    display: flex; justify-content: center; align-items: center;
+    z-index: 1000; transition: transform 0.2s ease-in-out;
+}
+#open-chat-btn span { /* Stile per lo span che contiene l'emoji */
+    font-size: 18px;  /* Dimensione dell'emoji */
+    line-height: 1;   /* Per un miglior centramento verticale dell'emoji */
+    color: white;     /* L'emoji di solito non prende il colore, ma per sicurezza */
+}
+#open-chat-btn:hover { transform: scale(1.1); }
+
+
+/* ... (resto degli stili per chat-initial-view, chat-log, message, ecc. rimangono invariati) ... */
+
+/* --- Main Chatbot Container --- */
+#chat-container {
+    position: fixed; bottom: 80px; right: 20px;
+    width: 360px;
+    max-height: 70vh;
+    background-color: #ffffff;
+    border: 1px solid rgba(0,0,0,0.07);
+    border-radius: 8px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+    display: none; /* Initially hidden, JS manages flex display */
+    flex-direction: column;
+    overflow: hidden; z-index: 999;
+    opacity: 0; transform: translateY(10px) scale(0.98);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    pointer-events: none;
+}
+#chat-container.active {
+    opacity: 1; transform: translateY(0) scale(1);
+    pointer-events: auto;
+    display: flex; /* Ensure flex display when active */
+}
+
+/* --- Chatbot Header with Avatar --- */
+#chat-header {
+    padding: 8px 12px;
+    display: flex; justify-content: space-between; align-items: center;
+    border-bottom: 1px solid rgba(0,0,0,0.07);
+    flex-shrink: 0;
+}
+.header-content {
+    display: flex;
+    align-items: center;
+}
+#header-avatar-img {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    margin-right: 8px;
+    object-fit: cover;
+}
+#header-title { font-size: 14px; color: #191919; font-weight: 500; }
+#close-chat-btn {
+    background: none; border: none; font-size: 24px;
+    cursor: pointer; color: #757575; padding: 4px; line-height: 1;
+}
+#close-chat-btn:hover { color: #191919; }
+
+/* --- Initial View Styling --- */
+#chat-initial-view {
+    padding: 20px 24px;
+    text-align: center;
+    flex-grow: 1;
+    display: block; /* Managed by JS */
+}
+#chat-initial-view h2 {
+    font-size: 18px; color: #191919; font-weight: 600;
+    margin-top: 0; margin-bottom: 20px;
+}
+#suggested-actions-list {
+    list-style: none; padding: 0; margin: 0; text-align: left;
+}
+.suggested-action {
+    display: flex; align-items: center; padding: 10px 8px;
+    margin-bottom: 6px; border-radius: 4px; cursor: pointer;
+    transition: background-color 0.15s ease;
+    font-size: 14px; color: #333;
+}
+.suggested-action:hover { background-color: rgba(0,0,0,0.04); }
+.suggested-action span { margin-left: 10px; }
+
+/* --- Conversation View Styling --- */
+#chat-conversation-view {
+    display: none; /* Initially hidden, managed by JS */
+    flex-direction: column;
+    flex-grow: 1;
+    overflow: hidden;
+}
+#chat-log {
+    flex-grow: 1; padding: 16px; overflow-y: auto;
+    display: flex; flex-direction: column; gap: 10px;
+}
+
+/* --- Message Bubbles (No specific bot avatar here) --- */
+.message {
+    max-width: 85%; padding: 8px 12px; line-height: 1.5;
+    word-wrap: break-word; border-radius: 16px;
+}
+.user-message {
+    background-color: #2e6ddc; color: white;
+    align-self: flex-end; border-radius: 16px 16px 4px 16px;
+}
+.bot-message {
+    background-color: #f0f0f0; color: #191919;
+    align-self: flex-start; border-radius: 16px 16px 16px 4px;
+}
+.bot-message::before {
+    display: none; /* Ensure no pseudo-element avatar */
+}
+
+/* --- Quick Question Buttons Area --- */
+#quick-questions-display-area {
+    padding: 8px 16px 12px 16px;
+    display: none; /* Initially hidden */
+    flex-wrap: wrap;
+    gap: 8px;
+    border-top: 1px solid rgba(0,0,0,0.07);
+    background-color: #fff;
+    flex-shrink: 0;
+}
+.quick-question-btn {
+    background-color: rgba(46,109,220,0.08);
+    color: #2e6ddc; border: none;
+    border-radius: 4px; padding: 7px 12px;
+    font-size: 13px; font-weight: 500;
+    cursor: pointer; transition: background-color 0.15s ease;
+}
+.quick-question-btn:hover { background-color: rgba(46,109,220,0.15); }
+
+/* --- "Back to suggestions" Button Area --- */
+#back-to-categories-area {
+    padding: 12px 16px;
+    border-top: 1px solid rgba(0,0,0,0.07);
+    background-color: #ffffff;
+    flex-shrink: 0;
+}
+#back-to-categories-btn {
+    background-color: transparent; color: #2e6ddc;
+    border: none; border-radius: 4px; padding: 8px 0px;
+    font-size: 14px; font-weight: 500; cursor: pointer;
+    display: flex; align-items: center;
+    transition: background-color 0.15s ease;
+}
+#back-to-categories-btn:hover { background-color: rgba(46,109,220,0.08); }
